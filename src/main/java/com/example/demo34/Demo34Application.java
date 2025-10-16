@@ -1,7 +1,7 @@
 package com.example.demo34;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
 import org.springframework.context.annotation.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.security.crypto.password.*;
@@ -17,6 +17,7 @@ public class Demo34Application {
   // @Component는 스프링이 객체를 생성해 ApplicationContext에 등록
   // @Bean은 개발자가 객체를 생성해 ApplicationContext에 등록
   // @Mapper는 마이바티스가 객체를 생성해  ApplicationContext에 등록
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
