@@ -1,0 +1,78 @@
+1. 스프링 프레임워크의 역할(프레임워크를 다른 말로 컨테이너로 자주 부른다)
+- 의존성 주입(Dependency Injection)
+- 제어 역전(Inverion of Control)
+- 스프링은 DI 컨테이너 + IoC 컨테이너
+
+2. Inversion of Control
+- 프로그램의 흐름을 개발자가 직접 제어하는 것이 아니라 외부에서 관리하고 결정한다
+- 대표적인 기법 : 콜백으로 이벤트 처리, 의존성 주입
+
+3. 의존성 주입(new 금지)
+- 필요한 객체를 개발자가 능동적으로 생성하지 X
+- 스프링이 객체를 생성한 다음 개발자가 필요할 때 넣어준다(개발자는 수동적으로 공급받아 사용한다)
+- 모든 객체를 스프링이 생성하는 것(스프링 bean)은 아니다
+  처리하는 객체 : 스프링 빈
+  값을 가진 객체(VO -> Entity) : 스프링 빈이 될 수 없다
+- 스프링빈이 되는 조건
+  프로젝트 패키지의 하위 패키지에서 특정 어노테이션이 지정된 클래스를 찾는다
+  @Component
+        @Controller : 사용자와 입출력하는 클래스
+        @Service : 처리하는 클래스
+        @Repository : 데이터베이스와 연동하는 클래스
+- @Autowired : 스프링빈을 주입
+
+4. 스프링을 대표하는 ApplicationContext
+- 스프링이 @Component가 지정된 클래스를 찾아 스프링 빈을 생성하고 관리한다(Component-Scan)
+- @Autowired를 만나면 빈을 주입해준다
+
+5. 마이바티스를 사용할 경우 @Repository 대신에 @Mapper를 사용한다
+- @Repository는 스프링이 component scan에서 객체를 생성
+  그럴려면 스프링이 마이바티스를 알아야 하는데...스프링이 마이바티스를 지원하기 시작한 건 얼마안된다
+  예전부터 스프링이 마이바티스를 지원하는 것이 아니라, 마이바티스가 스프링을 지원했다
+    스프링이 아닌 마이바티스가 객체를 생성한 다음 ApplicationContext에 등록해주는 방식
+
+6. 스프링과 DB를 연결하기
+- 스프링에서 서버의 동작 결과를 출력하는 것을 logging이라고 한다
+  DB는 스프링 외부의 존재이므로 로깅이 안된다 -> log4jdbc라는 라이브러리를 설치해 sql도 로깅하자
+- application.properties에 DB 설정을 잡아야한다
+    드라이버 이름, 서버 주소, 사용자 아이디, 비밀번호
+- logback.xml
+    스프링의 기본 로깅 라이브러리는 logback
+    설정을 안 잡으면 db 로깅이 안된다. logback.xml로 커스터마이즈
+
+7. 필터
+- 백엔드용 자바 표준(Java EE)은 Servlet 인터페이스
+  스프링은 DispatcherServlet을 이용해 서블릿 백엔드와 연결
+  (스프링은 Servlet 기반)
+- 필터는 서블릿 앞에서 실행되는 클래스 표준
+  예를 들어 로그인 필터 : 서블릿 앞에서 로그인 여부를 확인하고 비로그인이면 로그인 페이지로 보낸다
+  @GetMapping("/board/write")
+  public ModelAndView write(HttpSession session) {
+    if(session.getAttribute("username")==null)
+        return new ModelAndView("redirect:/");
+    .....
+  }
+
+8. 스프링 시큐리티
+- 필터를 이용해서 인증과 인가 작업을 수행
+- 인증 : 사용자의 신원을 확인(로그인) -> 실패할 경우 상태코드 401
+         기본적으로 FormLogin을 지원(웹 브라우저 화면에 아이디/비밀번호 입력해서 로그인, HttpSession으로 관리)
+         비밀번호 암호화하는 PasswordEncoder 객체를 필수 요구
+- 인가 : 로그인한 사용자의 권한을 확인 -> 실패할 경우 상태코드 403
+  (400: 수신거부, 404: not found, 405: get/post 메소드 오류, 500: 작업 중 오류)
+
+9. @Component와 @Bean
+- 스프링빈으로 생성되려면 @Component를 지정해야 한다
+  그런데 남이 작성한 코드에 내가 @Component를 걸 수가 있나? -> 이럴때 @Bean을 사용
+
+
+
+
+
+
+
+
+
+
+
+
