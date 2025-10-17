@@ -12,5 +12,6 @@ public class Member {
   private String username;
   private String password;
   private String email;
-  private LocalDate joinDay;
+  private LocalDate joinDay = LocalDate.now();
+  private String role = "USER";
 }

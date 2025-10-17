@@ -19,8 +19,7 @@ public class Demo34UserDetailsService implements UserDetailsService {
     Member member = memberDao.findByUsername(username);
 
     // UserDetails : 아이디, 비밀번호, 권한, 비밀번호 만료여부, 만료기한....인증 정보를 담는 객체
-    UserDetails user = User.builder().username(member.getUsername()).password(member.getPassword())
-        .roles("USER").build();
+    UserDetails user = User.builder().username(member.getUsername()).password(member.getPassword()).roles(member.getRole()).build();
     return user;
   }
 }

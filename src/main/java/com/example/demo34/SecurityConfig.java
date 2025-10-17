@@ -34,10 +34,9 @@ public class SecurityConfig {
     // csrf : 타임리프 위변조를 잡아내는 기술 -> 일단 꺼놓자
     http.csrf(config->config.disable());
     // 로그인 페이지와 로그인 처리 주소를 지정(로그인 처리는 SS가 담당. 주소만 지정)
-    http.formLogin(config->config.loginPage("/member/login")
-        .loginProcessingUrl("/member/login"));
+    http.formLogin(config->config.loginPage("/member/login").loginProcessingUrl("/member/login"));
     // 로그아웃을 처리할 주소 지정
-    http.logout(config->config.logoutUrl("/member/logout"));
+    http.logout(config->config.logoutUrl("/member/logout").logoutSuccessUrl("/"));
     return http.build();
   }
 }

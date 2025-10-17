@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+  <title>jQuery 메소드 체이닝</title>
+</head>
+<body>
+  <div id="t1"></div>
+  <div id="t2">홍길동</div>
+  <input id="t3" value="전우치">
+  <script>
+    $('#t1').text('선택했어요').css('color','red').css('border','1px solid blue').attr('class','target');
+    // jQuery의 메소드들은 값을 주면 세터, 값을 안주면 게터
+    console.log($('#t2').text());
+    console.log($('#t1').css('color'));
+
+    // innerHTML -> text(), value->val()
+    console.log($('#t3').val());
+
+    // DOM 내부 이동
+    const $div = $('#t2');
+    console.log($div.prev().text());
+    console.log($div.next().val());
+  </script>
+</body>
+</html>

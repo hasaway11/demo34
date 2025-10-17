@@ -15,7 +15,7 @@ public class MemberController {
 
   @GetMapping("/")
   public ModelAndView index() {
-    return new ModelAndView("/index");
+    return new ModelAndView("index");
   }
 
   // 로그인 여부 확인 : PreAuthorize('isAuthenticated()'), PreAuthorize('isAnonymous()')

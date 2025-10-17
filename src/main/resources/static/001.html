@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+  <title>jQuery</title>
+</head>
+<body>
+  <div id="t1"></div>
+  <div id="t2"></div>
+  <script>
+    document.getElementById('t1').innerHTML = '자바스크립트입니다';
+    $('#t2').text('jQuery입니다');
+    console.log(document.getElementById('t1'));
+    console.log($('#t2'));
+    // jQuery의 $()는 HTML 요소를 선택한 다음 양념을 친다
+    console.log($('#t2')[0]);
+  </script>
+</body>
+</html>

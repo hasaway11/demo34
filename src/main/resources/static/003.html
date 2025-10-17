@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+  <style>
+    .fail { color: red; font-size:0.8em; }
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  아이디:<input type="text" id="username" onfocusout="checkUsername();"><br>
+  <span id="username-msg" class="fail"></span><br>
+  비밀번호:<input type="password" id="password" onfocusout="checkPassword();"><br>
+  <span id="password-msg" class="fail"></span><br>
+  <button onclick="login();">로그인</button>
+  <script>
+    function checkUsername() {
+      const username = $('#username').val();
+      $('#username-msg').text('');
+      if(username==='') {
+        $('#username-msg').text('아이디를 입력하세요');
+        return false;
+      }
+      return true;
+    }
+
+    function checkPassword() {
+      const password = $('#password').val();
+      $('#password-msg').text('');
+      if(password=='') {
+        $('#password-msg').text('비밀번호를 입력하세요');
+        return false;
+      }
+      return true;
+    }
+
+    function login() {
+      const r1 = checkUsername();
+      const r2 = checkPassword();
+      // &&보다 ==가 연산자 우선순위가 높다. 따라서()를 이용해 &&를 먼저 계산하자
+      if((r1&&r2)==false)
+        return;
+      alert('서밋합니다');
+    }
+  </script>
+</body>
+</html>
