@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // []는 글자란 의미. {}는 글자의 개수
+    const pattern = /[a-z0-9]{6,10}/;
+
+    console.log(pattern.test("spring"));    // 성공
+    console.log(pattern.test("S0"));    // 실패
+
+    console.log(pattern.test("Spring1"));
+    // 성공하는데? 현재 패턴은 [소문자 또는 숫자]가 최소6글자에서 최대10글자
+  </script>
+</body>
+</html>
