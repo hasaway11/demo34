@@ -51,7 +51,6 @@ public class MemberController {
 
   // get 비밀번호 확인
 
-
   // post 비밀번호 확인 처리
 
   // get 내정보 보기 출력
