@@ -2,7 +2,10 @@ package com.example.demo34.controller;
 
 import com.example.demo34.entity.*;
 import com.example.demo34.service.*;
+import jakarta.servlet.http.*;
 import jakarta.validation.*;
+import jakarta.validation.constraints.*;
+import org.apache.tomcat.util.net.openssl.ciphers.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.access.prepost.*;
 import org.springframework.stereotype.*;
@@ -10,6 +13,8 @@ import org.springframework.validation.*;
 import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
+
+import java.security.*;
 
 // 스프링 검증 기능 활성화
 // @Validated가 없으면 스프링이 아닌 자바 표준 검증을 사용한다 -> 반복 코드들이 발생....
@@ -49,11 +54,35 @@ public class MemberController {
   @GetMapping("/member/login")
   public void login() {}
 
-  // get 비밀번호 확인
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/member/check-password")
+  public ModelAndView checkPassword(HttpSession session) {
+    // 이미 비밀번호확인했어 -> 그러면 내정보로 가
+    if(session.getAttribute("checkPassword")!=null)
+      return new ModelAndView("redirect:/member/readme");
+    return new ModelAndView("member/check-password");
+  }
 
-  // post 비밀번호 확인 처리
+  @PreAuthorize("isAuthenticated()")
+  @PostMapping("/member/check-password")
+  public ModelAndView checkPassword(@RequestParam @NotEmpty String password, Principal principal, HttpSession session) {
+    // 비밀번호 확인 -> 실패하면 확인화면으로 이동 -> 성공하면 성공정보는 세션에 저장 후 readme로 이동
+    boolean checkSuccess = memberService.checkPassword(password, principal.getName());
+    if(checkSuccess==false)
+      return new ModelAndView("redirect:/member/check-password?error");
+    session.setAttribute("checkPassword", true);
+    return new ModelAndView("redirect:/member/readme");
+  }
 
-  // get 내정보 보기 출력
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/member/readme")
+  public ModelAndView readme(HttpSession session, Principal principal) {
+    // 내정보본다고 -> 비밀번호 확인했어? -> 안했으면 확인부터 해
+    if(session.getAttribute("checkPassword")==null)
+      return new ModelAndView("redirect:/member/check-password");
+    Member member = memberService.readme(principal.getName());
+    return new ModelAndView("member/readme").addObject("member", member);
+  }
 }
 
 
